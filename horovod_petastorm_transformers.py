@@ -4,7 +4,7 @@
 # MAGIC 
 # MAGIC Data pre-processing is handled by Spark. This includes applying the transformer model's tokenizer directly to a Spark DataFrame via a PanadasUDF. The tokenized DataFrame is then cached using Petastorm.
 # MAGIC 
-# MAGIC Horovod has two methods for executing training loops, the higher-level Estimator API and the more fine-grained, standard Pytorch training loop method. This example is based on the latter approach. For examples of both approaches provided by Horovod, see the links below.
+# MAGIC Horovod has two methods for executing training loops, the higher-level Estimator API and the more fine-grained, standard Pytorch training loop method. This example is based on the latter approach. For examples of both approaches provided by Horovod, see the links below. Note that Estimators can be included as a stage within a [Spark MLlib Pipeline](https://spark.apache.org/docs/latest/ml-pipeline.html#example-pipeline).
 # MAGIC 
 # MAGIC **Getting started**  
 # MAGIC To create the IMDB Delta tables referenced in this notebook, follow steps 1 and 2 of the "Getting started" section of [this repository](https://github.com/marshackVB/rapid_nlp_blog). Steps 2 will download additional datasets for text classification problems. You can optionally run cells only associated with the IMDB data ingestion and table creation.  
@@ -12,6 +12,7 @@
 # MAGIC **Other useful resources**  
 # MAGIC  - Example [pytorch training loop implementation](https://github.com/horovod/horovod/blob/master/examples/pytorch/pytorch_mnist.py#L71) from Horovod  
 # MAGIC  - Example [TorchEstimator implementation](https://github.com/horovod/horovod/blob/master/examples/spark/pytorch/pytorch_spark_mnist.py) from Horovod
+# MAGIC  - Pytorch examples including [Pytorch lighting](https://github.com/horovod/horovod/tree/master/examples/spark/pytorch)
 # MAGIC  - Horovod [Spark documentation](https://horovod.readthedocs.io/en/stable/spark_include.html) and [Pytorch documentation](https://horovod.readthedocs.io/en/stable/pytorch.html)
 # MAGIC  - DAIS [talk on petastorm](https://www.youtube.com/watch?v=lQJO_aKGaFs) with [example petastorm/horovod implementation](https://docs.databricks.com/_static/notebooks/deep-learning/petastorm-spark-converter-pytorch.html)
 
@@ -377,7 +378,7 @@ hr.run(main, **args)
 
 # COMMAND ----------
 
-gpu_cnt = 2
+gpu_cnt = 8
 hr = HorovodRunner(np=gpu_cnt, driver_log_verbosity='all')
 hr.run(main, **args)
 

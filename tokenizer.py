@@ -67,42 +67,6 @@ class TableTokenizer():
 
     return tokenized_df
   
-  
-  
-"""
-def get_tokenizer_udf(model_name:str, batch_size=1000, truncation=True, padding:Union[bool, str]='max_length', max_length=512):
-
-  tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
-  spark.sparkContext.broadcast(tokenizer)
-  
-  schema = StructType()
-  schema.add(StructField('input_ids', ArrayType(IntegerType()), True))
-  schema.add(StructField('attention_mask', ArrayType(IntegerType()), True))
-
-  def tokenize(batch):
-
-    return tokenizer(batch, 
-                     truncation=truncation,
-                     padding=padding,
-                     max_length=max_length)
-
-
-  def tokenize_udf(df:pd.DataFrame) -> pd.DataFrame:
-
-    tokenized = df.apply(lambda x: tokenize(x))
-
-    tokenized = tokenized.to_frame(name='tokenized')
-
-    tokenized['input_ids'] = tokenized.tokenized.apply(lambda x: x['input_ids'])
-
-    tokenized['attention_mask'] = tokenized.tokenized.apply(lambda x: x['attention_mask'])
-
-    return tokenized[['input_ids', 'attention_mask']]
-
-  return pandas_udf(tokenize_udf, returnType=schema)
- 
-"""
-
 
 
 

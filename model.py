@@ -40,11 +40,6 @@ class TransformerModel(pl.LightningModule):
       loss = output.loss
       self.log("val_loss", loss)
       
-    #def backward(trainer, loss, optimizer, optimizer_idx):
-    #  loss.backward()
-      
-    #def optimizer_step(self, epoch, batch_idx, optimizer, optimizer_idx,):
-    #  optimizer.step()
       
       
       
